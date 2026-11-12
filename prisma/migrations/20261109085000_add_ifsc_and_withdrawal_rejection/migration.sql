@@ -1,0 +1,4 @@
+ALTER TABLE "User"
+ADD COLUMN "ifscCode" TEXT;
+
+ALTER TYPE "WithdrawalStatus" ADD VALUE IF NOT EXISTS 'REJECTED';

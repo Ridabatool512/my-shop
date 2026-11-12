@@ -1,0 +1,180 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String     @id @default(cuid())
+  name          String?
+  email         String     @unique
+  password      String
+  role          Role       @default(BUYER)
+  status        UserStatus @default(ACTIVE)
+  isApproved    Boolean    @default(true)
+  balance       Float      @default(0)
+  bankName      String?
+  accountNumber String?
+  accountTitle  String?
+  ifscCode      String?
+  createdById   String?
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  createdBy          User?               @relation("AdminCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  createdAdmins      User[]              @relation("AdminCreator")
+  ordersBought       Order[]             @relation("BuyerOrders")
+  ordersManaged      OrderAssignment[]   @relation("AdminAssignments")
+  ordersAssigned     OrderAssignment[]   @relation("SellerAssignments")
+  products           Product[]
+  sentMessages       ChatMessage[]       @relation("ChatMessageSender")
+  receivedMessages   ChatMessage[]       @relation("ChatMessageReceiver")
+  withdrawalRequests WithdrawalRequest[]
+}
+
+model ChatMessage {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  message    String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  sender   User @relation("ChatMessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver User @relation("ChatMessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@index([senderId, receiverId, createdAt])
+  @@index([receiverId, isRead, createdAt])
+}
+
+model Product {
+  id          String          @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  imageUrl    String?
+  stock       Int             @default(0)
+  category    ProductCategory @default(ELECTRONICS)
+  sellerId    String?
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  slug        String          @unique
+
+  seller     User?       @relation(fields: [sellerId], references: [id], onDelete: SetNull)
+  orderItems OrderItem[]
+}
+
+model Order {
+  id String @id @default(cuid())
+
+  buyerId String?
+  buyer   User?   @relation("BuyerOrders", fields: [buyerId], references: [id])
+
+  customerName  String?
+  customerEmail String?
+  phone         String?
+  address       String?
+
+  status OrderStatus @default(PENDING)
+  total  Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assignments OrderAssignment[]
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id        String @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  price     Float
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model OrderAssignment {
+  id               String           @id @default(cuid())
+  orderId          String
+  sellerId         String
+  assignedById     String
+  priceSetByAdmin  Float
+  profitAmount     Float
+  isPaid           Boolean          @default(false)
+  isApproved       Boolean          @default(false)
+  profitCreditedAt DateTime?
+  status           AssignmentStatus @default(PENDING)
+  assignedAt       DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  assignedBy User  @relation("AdminAssignments", fields: [assignedById], references: [id])
+  order      Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  seller     User  @relation("SellerAssignments", fields: [sellerId], references: [id])
+}
+
+model WithdrawalRequest {
+  id            String           @id @default(cuid())
+  sellerId      String
+  amount        Float
+  bankName      String
+  accountNumber String
+  accountTitle  String
+  status        WithdrawalStatus @default(PENDING)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  seller User @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+
+  @@index([status, createdAt])
+  @@index([sellerId, createdAt])
+}
+
+enum Role {
+  SUPER_ADMIN
+  ADMIN
+  SELLER
+  BUYER
+}
+
+enum UserStatus {
+  ACTIVE
+  FROZEN
+  INACTIVE
+}
+
+enum OrderStatus {
+  PENDING
+  ASSIGNED
+  COMPLETED
+  APPROVED
+}
+
+enum AssignmentStatus {
+  PENDING
+  COMPLETE
+}
+
+enum WithdrawalStatus {
+  PENDING
+  COMPLETE
+  REJECTED
+}
+
+enum ProductCategory {
+  MOBILE_ACCESSORIES
+  ELECTRONICS
+  JEWELLERY
+  KIDS_PRODUCTS
+  FASHION
+  TV_AND_ANDROID
+  GAMING_PC
+  PS5_ACCESSORIES
+  FRAGRANCE_OILS
+  SCENTED_CANDLES
+  RESIN_ART
+}

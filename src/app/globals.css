@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #080d18;
+  --foreground: #e2e8f0;
 }
 
 @theme inline {
@@ -12,15 +12,367 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.premium-site-background {
+  position: relative;
+  isolation: isolate;
+  background-color: #080d18;
+}
+
+.premium-site-background::before {
+  position: fixed;
+  z-index: -1;
+  inset: -18%;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(ellipse at 50% 34%, rgb(59 130 246 / 17%), transparent 38%),
+    radial-gradient(ellipse at 16% 12%, rgb(30 64 175 / 18%), transparent 42%),
+    radial-gradient(ellipse at 86% 74%, rgb(109 40 217 / 12%), transparent 42%),
+    radial-gradient(ellipse at 50% 100%, rgb(14 116 144 / 9%), transparent 44%),
+    linear-gradient(135deg, #080d18 5%, #0b1424 52%, #0a1020 100%);
+  background-size: 130% 130%;
+  animation: premium-mesh-float 32s ease-in-out infinite alternate;
+}
+
+.premium-mesh-background {
+  background: linear-gradient(
+    145deg,
+    rgb(15 23 42 / 20%),
+    rgb(8 13 24 / 8%) 55%,
+    rgb(30 41 59 / 16%)
+  );
+}
+
+.auth-page-background {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgb(37 99 235 / 17%), transparent 42%),
+    radial-gradient(ellipse at 12% 86%, rgb(124 58 237 / 12%), transparent 38%),
+    linear-gradient(145deg, #080d18, #0b1424 55%, #0a1020);
+}
+
+.auth-glass-card {
+  width: 100%;
+  max-width: 28rem;
+  border: 1px solid rgb(148 163 184 / 22%);
+  border-radius: 1.25rem;
+  background: linear-gradient(145deg, rgb(15 23 42 / 92%), rgb(15 23 42 / 78%));
+  box-shadow: 0 24px 80px rgb(2 6 23 / 45%), inset 0 1px rgb(255 255 255 / 5%);
+  backdrop-filter: blur(20px);
+}
+
+.auth-page-footer a {
+  color: #cbd5e1;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.auth-page-footer a:hover {
+  color: #7dd3fc;
+}
+
+.sale-popup-backdrop {
+  position: fixed;
+  z-index: 50;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: rgb(2 6 23 / 72%);
+  backdrop-filter: blur(8px);
+}
+
+.sale-popup-card {
+  position: relative;
+  width: min(100%, 34rem);
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 35%);
+  border-radius: 1.5rem;
+  background:
+    radial-gradient(ellipse at 80% 10%, rgb(254 240 138 / 82%), transparent 36%),
+    linear-gradient(125deg, #ec4899 0%, #ef4444 48%, #f97316 76%, #facc15 130%);
+  box-shadow: 0 28px 90px rgb(0 0 0 / 45%);
+  color: white;
+}
+
+.sale-popup-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  display: grid;
+  width: 2.5rem;
+  height: 2.5rem;
+  place-items: center;
+  border: 1px solid rgb(255 255 255 / 35%);
+  border-radius: 9999px;
+  background: rgb(127 29 29 / 18%);
+  color: white;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.sale-popup-close:hover {
+  transform: rotate(90deg);
+  background: rgb(127 29 29 / 36%);
+}
+
+.sale-popup-shop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: white;
+  padding: 0.9rem 1.5rem;
+  color: #be123c;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 10px 24px rgb(127 29 29 / 24%);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.sale-popup-shop:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 14px 30px rgb(127 29 29 / 32%);
+}
+
+main.min-h-screen.bg-slate-50 {
+  background-color: transparent;
+}
+
+@keyframes premium-mesh-float {
+  0% {
+    background-position:
+      0% 0%,
+      100% 0%,
+      100% 100%,
+      0% 100%,
+      50% 50%;
+  }
+  50% {
+    background-position:
+      12% 18%,
+      88% 12%,
+      82% 86%,
+      15% 78%,
+      48% 52%;
+  }
+  100% {
+    background-position:
+      20% 5%,
+      78% 22%,
+      90% 72%,
+      5% 90%,
+      52% 48%;
+  }
+}
+
+@keyframes myshop-logo-shine {
+  0% {
+    background-position: 200% 0;
+  }
+  65%,
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.myshop-logo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.myshop-logo::after {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  content: "";
+  inset: -20% -35%;
+  background: linear-gradient(
+    110deg,
+    transparent 42%,
+    rgb(255 255 255 / 12%) 47%,
+    rgb(255 255 255 / 82%) 50%,
+    rgb(255 255 255 / 12%) 53%,
+    transparent 58%
+  );
+  background-size: 220% 100%;
+  animation: myshop-logo-shine 4.5s ease-in-out infinite;
+}
+
+.myshop-logo-shop {
+  background-image: linear-gradient(110deg, #2563eb 5%, #6366f1 52%, #9333ea 100%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes myshop-nav-shine {
+  from {
+    transform: translateX(-160%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(260%) skewX(-18deg);
+  }
+}
+
+.myshop-nav-link {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.65rem;
+  padding: 0.625rem 0.875rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.myshop-nav-link::after {
+  position: absolute;
+  z-index: 1;
+  top: -25%;
+  bottom: -25%;
+  left: -45%;
+  width: 35%;
+  pointer-events: none;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 78%),
+    transparent
+  );
+  transform: translateX(-160%) skewX(-18deg);
+}
+
+.myshop-nav-link:hover {
+  color: #7dd3fc;
+  background-color: rgb(30 41 59 / 80%);
+  box-shadow: 0 4px 18px rgb(37 99 235 / 24%);
+}
+
+.myshop-nav-link.myshop-signout-link {
+  border-color: rgb(148 163 184 / 25%);
+  background-color: rgb(15 23 42 / 75%);
+  color: #cbd5e1;
+}
+
+.myshop-nav-link.myshop-signout-link:hover {
+  border-color: rgb(125 211 252 / 45%);
+  background-color: rgb(30 41 59 / 90%);
+  color: #7dd3fc;
+}
+
+.myshop-nav-link:hover::after {
+  animation: myshop-nav-shine 650ms ease-out;
+}
+
+.myshop-signout-link {
+  cursor: pointer;
+}
+
+.myshop-cart-link {
+  color: #ffffff;
+  background-image: linear-gradient(115deg, #2563eb, #4f46e5 55%, #7c3aed);
+  box-shadow: 0 4px 12px rgb(79 70 229 / 24%);
+}
+
+.myshop-nav-link.myshop-cart-link {
+  color: #ffffff;
+}
+
+.myshop-cart-link:hover {
+  color: #ffffff;
+  background-image: linear-gradient(115deg, #1d4ed8, #4338ca 55%, #6d28d9);
+  box-shadow: 0 8px 20px rgb(79 70 229 / 34%);
+  transform: translateY(-1px) scale(1.035);
+}
+
+@keyframes myshop-button-shine {
+  from {
+    transform: translateX(-160%) skewX(-18deg);
+  }
+  to {
+    transform: translateX(260%) skewX(-18deg);
+  }
+}
+
+.myshop-add-to-cart {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-image: linear-gradient(115deg, #2563eb, #4f46e5 55%, #7c3aed);
+  box-shadow: 0 4px 12px rgb(79 70 229 / 24%);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    filter 180ms ease;
+}
+
+.myshop-add-to-cart::after {
+  position: absolute;
+  z-index: -1;
+  top: -30%;
+  bottom: -30%;
+  left: -45%;
+  width: 35%;
+  content: "";
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 58%),
+    transparent
+  );
+  transform: translateX(-160%) skewX(-18deg);
+}
+
+.myshop-add-to-cart:not(:disabled):hover {
+  transform: scale(1.035);
+  box-shadow: 0 8px 20px rgb(79 70 229 / 34%);
+  filter: saturate(1.12);
+}
+
+.myshop-add-to-cart:not(:disabled):hover::after {
+  animation: myshop-button-shine 700ms ease-out;
+}
+
+.myshop-add-to-cart:disabled {
+  background-image: linear-gradient(115deg, #9ca3af, #6b7280);
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .myshop-logo::after,
+  .myshop-nav-link::after,
+  .myshop-add-to-cart::after,
+  .premium-site-background::before {
+    animation: none;
+  }
+
+  .myshop-nav-link,
+  .myshop-add-to-cart,
+  .auth-page-footer a,
+  .sale-popup-close,
+  .sale-popup-shop {
+    transition: none;
+  }
+
+  .myshop-cart-link:hover {
+    transform: none;
+  }
 }

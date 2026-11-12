@@ -20,6 +20,41 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Admin orders and seller assignments
+
+Buyers and sellers sign in at `/login`; Super Admins and their Admins use the
+unlinked `/staff-access` page and must
+select the matching account type. Credentials are checked against the user's
+bcrypt password hash and selected account category. Admin accounts must have
+been created by a Super Admin. Existing seeded Admin accounts without this
+creator record cannot use the Admin dashboard; create a managed Admin account
+from `/super-admin`. Configure `AUTH_SECRET` in the environment
+before deploying; keep it private and use a strong random value.
+New users can register as a buyer or seller at `/signup`; administrator roles
+cannot be selected during public registration.
+
+In the Admin Orders Panel, select **Assign to Seller** on a pending order,
+choose a seller account, and enter the price. The form previews a 20% profit;
+the API recalculates and saves that amount along with the seller, order, and
+admin in `OrderAssignment`. Assignment creation and the order's transition to
+`ASSIGNED` are committed in one transaction. Only users with the `SELLER` role
+are accepted, and already-assigned orders cannot be assigned again.
+
+Admins are redirected to `/admin`, sellers to `/seller`, and buyers to `/`.
+The Seller Dashboard lists only assignments linked to the signed-in seller.
+Sellers can pick pending assignments; the API verifies ownership and changes
+only that seller's pending assignment to `COMPLETE`.
+The `/admin` workspace provides only Orders and Sellers sections. The
+`/super-admin` workspace provides buyer, seller, and managed-admin directories,
+admin creation, and order assignment activity. Apply the schema migration with
+`npx prisma migrate deploy` before using admin creation.
+
+The homepage catalog is populated by `npx prisma db seed`. The seed includes
+sample products in mobile accessories, electronics, kids products, fashion,
+TV/Android devices, gaming PCs, and PS5/accessories. Product prices are
+indicative PKR estimates, not live market quotes; verify and update them before
+using the catalog for actual sales.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
