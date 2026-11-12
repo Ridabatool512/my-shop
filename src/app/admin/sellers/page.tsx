@@ -1,5 +1,7 @@
 import { auth } from "@/auth";
 import SellerApprovalRequests from "@/app/admin/SellerApprovalRequests";
+
+export const instant = false;
 import SignOutButton from "@/app/components/SignOutButton";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";

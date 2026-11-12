@@ -8,6 +8,7 @@ import SignOutButton from "@/app/components/SignOutButton";
 import { prisma } from "@/lib/prisma";
 import { getInrToUsdRate } from "@/lib/exchange-rate";
 import { redirect } from "next/navigation";
+export const instant = false;
 
 async function AdminDashboardContent() {
   const session = await auth();

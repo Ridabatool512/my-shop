@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
+
+export const instant = false;
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { formatINRAsUSD } from "@/lib/currency";

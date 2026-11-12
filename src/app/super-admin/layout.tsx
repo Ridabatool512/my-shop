@@ -1,5 +1,7 @@
 import { auth } from "@/auth";
 import SignOutButton from "@/app/components/SignOutButton";
+
+export const instant = false;
 import SuperAdminSidebar from "@/app/super-admin/SuperAdminSidebar";
 import { redirect } from "next/navigation";
 

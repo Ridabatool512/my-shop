@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import { prisma } from "../../lib/prisma";
+
+export const instant = false;
 import CartClient from "./CartClient";
 import { getInrToUsdRate } from "@/lib/exchange-rate";
 import { auth } from "@/auth";
